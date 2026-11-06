@@ -46,21 +46,22 @@ public class CarBookingDao {
 
     }
     public void deleteCarBooking(UUID carBookingId){
-        CarBooking[] currentCarBooking;
+        //CarBooking[] currentCarBooking;
         int index=getCarBookingIndex(carBookingId);
         if (index<0){
             throw new CarBookingNotFoundException("Car booking not found.");
         }else {
-            int j=0;
-            currentCarBooking=new CarBooking[carBookings.length-1];
-            for (int i = 0; i < carBookings.length; i++) {
-                if(carBookings[i]!=null) {
-                    if (!carBookings[i].getId().equals(carBookingId)) {
-                        currentCarBooking[j++] = carBookings[i];
-                    }
-                }
-            }
-            carBookings=currentCarBooking;
+            //int j=0;
+            //currentCarBooking=new CarBooking[carBookings.length-1];
+//            for (int i = 0; i < carBookings.length; i++) {
+//                if(carBookings[i]!=null) {
+//                    if (!carBookings[i].getId().equals(carBookingId)) {
+//                        currentCarBooking[j++] = carBookings[i];
+//                    }
+//                }
+//            }
+            //carBookings=currentCarBooking;
+            carBookings[index].setStatus(BookingStatus.CANCELLED);
             System.out.println("Booking deleted successfully.");
         }
     }
@@ -89,5 +90,15 @@ public class CarBookingDao {
             }
         }
         return Arrays.copyOf(userCarBooking,count);
+    }
+    public CarBooking[] getAllBooking(){
+        CarBooking[] cbs=new CarBooking[carBookings.length];
+        int i=0;
+        for(CarBooking cb:carBookings){
+            if(cb!=null)
+                cbs[i++]=cb;
+
+        }
+        return Arrays.copyOf(cbs,i);
     }
 }

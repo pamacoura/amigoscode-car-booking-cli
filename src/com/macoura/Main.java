@@ -3,13 +3,9 @@ package com.macoura;
 import com.macoura.booking.CarBooking;
 import com.macoura.booking.CarBookingNotFoundException;
 import com.macoura.booking.CarBookingService;
-import com.macoura.booking.CarNotAvailaible;
-import com.macoura.car.Brand;
-import com.macoura.car.Car;
-import com.macoura.car.CarDao;
-import com.macoura.car.CarService;
+import com.macoura.booking.CarNotAvailable;
+import com.macoura.car.*;
 import com.macoura.user.User;
-import com.macoura.user.UserDao;
 import com.macoura.user.UserNotFoundException;
 import com.macoura.user.UserService;
 import java.time.LocalDate;
@@ -26,13 +22,11 @@ public class Main {
     private static CarBookingService carBookingService=new CarBookingService();
     private static CarService carService=new CarService();
     public static void main(String[] args){
-
             menu();
-
     }
     public static void bookCar() {
         System.out.println("List of users");
-        for (User u : UserDao.getUsers()) {
+        for (User u : userService.getAllUsers()) {
             System.out.println(u.toString());
         }
 
@@ -47,7 +41,7 @@ public class Main {
            }
        }
         System.out.println("List of cars");
-        for (Car c : CarDao.getCars()) {
+        for (Car c :carService.getCars()) {
             System.out.println(c.toString());
         }
         UUID cid=null;
@@ -93,13 +87,15 @@ public class Main {
            System.out.println(cb.toString());
        }catch (UserNotFoundException u){
            System.out.println(u.getMessage());
-       }catch (CarNotAvailaible c){
+       }catch (CarNotFoundException c){
+           System.out.println(c.getMessage());
+       }catch (CarNotAvailable c){
            System.out.println(c.getMessage());
        }catch (IllegalArgumentException e){
            System.out.println(e.getMessage());
        }
         System.out.println("");System.out.println("");
-        menu();
+        //menu();
 
     }
     public static void deleteBooking(){
@@ -131,12 +127,12 @@ public class Main {
 
         System.out.println("");
         System.out.println("");
-        menu();
+        //menu();
     }
     public static void viewAllUserBookedCars()  {
         System.out.println("3 - view All User Booked Cars");
         System.out.println("List of users");
-        for (User u : UserDao.getUsers()) {
+        for (User u : userService.getAllUsers()) {
             System.out.println(u.toString());
         }
 
@@ -165,21 +161,21 @@ public class Main {
         }
         System.out.println("");
         System.out.println("");
-        menu();
+        //menu();
     }
     public static void viewAllBookings(){
         System.out.println("4 - All Bookings");
-        if(carBookingService.getCurrentCarBooking().length==0){
+        if(carBookingService.getAllBooking().length==0){
             System.out.println("No bookings found.");
         }else {
-            for(CarBooking cb:carBookingService.getCurrentCarBooking()){
+            for(CarBooking cb:carBookingService.getAllBooking()){
                 System.out.println(cb.toString());
             }
         }
 
         System.out.println("");
         System.out.println("");
-        menu();
+        //menu();
     }
     public static void viewBookingList(){
         if(carBookingService.getCurrentCarBooking().length==0){
@@ -203,7 +199,7 @@ public class Main {
 
         System.out.println("");
         System.out.println("");
-        menu();
+        //menu();
     }
     public static void viewAvailableElectricCars(){
         System.out.println("6 - view Available Electric Cars");
@@ -217,7 +213,7 @@ public class Main {
 
         System.out.println("");
         System.out.println("");
-        menu();
+        //menu();
     }
     public static void viewAllUsers(){
         System.out.println("7 - view All Users");
@@ -231,10 +227,11 @@ public class Main {
         }
         System.out.println("");
         System.out.println("");
-        menu();
+        //menu();
     }
     public static void menu(){
-
+        boolean runing=true;
+        while(runing) {
             try {
                 System.out.println("Car Booking CLI");
                 System.out.println("---------------------------------");
@@ -247,27 +244,28 @@ public class Main {
                 System.out.println("7 - View All Users");
                 System.out.println("8 - Exit");
                 System.out.print("Enter your choice: ");
-                int choice= scanner.nextInt();
+                int choice = scanner.nextInt();
                 scanner.nextLine();
-                switch (choice){
-                    case 1-> bookCar();
-                    case 2-> deleteBooking();
-                    case 3-> viewAllUserBookedCars();
-                    case 4-> viewAllBookings();
-                    case 5-> viewAvailableCars();
-                    case 6-> viewAvailableElectricCars();
-                    case 7-> viewAllUsers();
-                    case 8-> {
+                switch (choice) {
+                    case 1 -> bookCar();
+                    case 2 -> deleteBooking();
+                    case 3 -> viewAllUserBookedCars();
+                    case 4 -> viewAllBookings();
+                    case 5 -> viewAvailableCars();
+                    case 6 -> viewAvailableElectricCars();
+                    case 7 -> viewAllUsers();
+                    case 8 -> {
+                        runing = false;
                         System.out.println("See you next time !!!!");
                     }
                     default -> System.out.println("Please select a number between 1 and 8.");
                 }
-            }catch (InputMismatchException e){
+            } catch (InputMismatchException e) {
                 System.out.println("Invalid input!");
                 scanner.next();
                 menu();
             }
-
+        }
 
 
 

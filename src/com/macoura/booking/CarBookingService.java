@@ -33,11 +33,13 @@ public class CarBookingService {
         Car car= carService.getCarById(carId).orElseThrow(()->new CarNotFoundException("Car not found with ID:"+carId));
         // 3. Validate the dates:
         // - startDate must not be in the past
+        if (startDate.isBefore(LocalDate.now())) {
+            throw new IllegalArgumentException("Start date cannot be in the past.");
+        }
         // - endDate must be after startDate
         // - if invalid, throw IllegalArgumentException or print an error
         if (!endDate.isAfter(startDate)) {
-            throw new IllegalArgumentException(
-                    "End date (" + endDate + ") must be after start date (" + startDate + ")");
+            throw new IllegalArgumentException("End date (" + endDate + ") must be after start date (" + startDate + ")");
         }
         // 4. Get all current bookings
         CarBooking[] currentCarBooking=carBookingDao.getCurrentCarBooking();
@@ -46,7 +48,7 @@ public class CarBookingService {
         if(currentCarBooking.length>0){
             for(CarBooking cb:currentCarBooking){
                 if(cb.getCar().getId().equals(car.getId())){
-                    throw new CarNotAvailaible("the car is not available");
+                    throw new CarNotAvailable("the car is not available");
                 }
             }
         }
@@ -70,5 +72,8 @@ public class CarBookingService {
     }
     public CarBooking[] getCarBookedBySpecificUser(UUID userId){
         return carBookingDao.getCarBookedBySpecificUser(userId);
+    }
+    public CarBooking[] getAllBooking(){
+        return carBookingDao.getAllBooking();
     }
 }

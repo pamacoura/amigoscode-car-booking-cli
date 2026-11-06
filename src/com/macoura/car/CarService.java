@@ -23,4 +23,7 @@ public class CarService {
 public Optional<Car> getCarById(UUID id){
     return carDao.getCarById(id);
 }
+    public Car[] getCars() {
+        return carDao.getCars();
+    }
 }

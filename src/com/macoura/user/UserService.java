@@ -11,7 +11,7 @@ public class UserService {
     }
 
     public User[] getAllUsers(){
-        return UserDao.getUsers();
+        return userDao.getUsers();
     }
     public Optional<User> getUserById(UUID id){
         return userDao.getUserById(id);

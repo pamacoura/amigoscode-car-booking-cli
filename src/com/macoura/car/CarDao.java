@@ -1,9 +1,9 @@
 package com.macoura.car;
 
-import com.macoura.booking.BookingStatus;
+
 import com.macoura.booking.CarBooking;
 import com.macoura.booking.CarBookingDao;
-import com.macoura.user.User;
+
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -26,8 +26,15 @@ public class CarDao {
         carBookingDao=new CarBookingDao();
     }
 
-    public static Car[] getCars() {
-        return cars;
+    public Car[] getCars() {
+        Car[] cs=new Car[cars.length];
+        int i=0;
+        for(Car c:cars){
+            if(c!=null)
+                cs[i++]=c;
+
+        }
+        return Arrays.copyOf(cs,i);
     }
     public Optional<Car> getCarById(UUID id){
         Optional<Car> u=Optional.ofNullable(null);

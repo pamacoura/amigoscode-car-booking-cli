@@ -19,7 +19,7 @@ public class UserDao {
 
     }
 
-    public static User[] getUsers() {
+    public  User[] getUsers() {
         User[] us=new User[users.length];
         int i=0;
         for(User u:users){
