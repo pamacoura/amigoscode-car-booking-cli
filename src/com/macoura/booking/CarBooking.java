@@ -12,11 +12,11 @@ public class CarBooking {
     private UUID id;
     private User user;
     private Car car;
-    LocalDate startDate;
-    LocalDate endDate;
-    BigDecimal price;
-    BookingStatus status;
-    LocalDateTime bookedAt;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private BigDecimal price;
+    private BookingStatus status;
+    private LocalDateTime bookedAt;
 
     public CarBooking(User user, Car car, LocalDate startDate, LocalDate endDate, BigDecimal price, BookingStatus status, LocalDateTime bookedAt) {
         this.id= UUID.randomUUID();

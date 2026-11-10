@@ -12,7 +12,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.UUID;
 
@@ -95,8 +94,6 @@ public class Main {
            System.out.println(e.getMessage());
        }
         System.out.println("");System.out.println("");
-        //menu();
-
     }
     public static void deleteBooking(){
         System.out.println("2 - Delete booking");
@@ -122,12 +119,9 @@ public class Main {
                 System.out.println(cb.getMessage());
             }
         }
-
-
-
         System.out.println("");
         System.out.println("");
-        //menu();
+
     }
     public static void viewAllUserBookedCars()  {
         System.out.println("3 - view All User Booked Cars");
@@ -161,7 +155,6 @@ public class Main {
         }
         System.out.println("");
         System.out.println("");
-        //menu();
     }
     public static void viewAllBookings(){
         System.out.println("4 - All Bookings");
@@ -175,7 +168,6 @@ public class Main {
 
         System.out.println("");
         System.out.println("");
-        //menu();
     }
     public static void viewBookingList(){
         if(carBookingService.getCurrentCarBooking().length==0){
@@ -196,10 +188,8 @@ public class Main {
                 System.out.println(c.toString());
             }
         }
-
         System.out.println("");
         System.out.println("");
-        //menu();
     }
     public static void viewAvailableElectricCars(){
         System.out.println("6 - view Available Electric Cars");
@@ -213,7 +203,6 @@ public class Main {
 
         System.out.println("");
         System.out.println("");
-        //menu();
     }
     public static void viewAllUsers(){
         System.out.println("7 - view All Users");
@@ -227,12 +216,10 @@ public class Main {
         }
         System.out.println("");
         System.out.println("");
-        //menu();
     }
     public static void menu(){
-        boolean runing=true;
-        while(runing) {
-            try {
+        boolean running=true;
+        while(running) {
                 System.out.println("Car Booking CLI");
                 System.out.println("---------------------------------");
                 System.out.println("1 - Book Car");
@@ -244,6 +231,7 @@ public class Main {
                 System.out.println("7 - View All Users");
                 System.out.println("8 - Exit");
                 System.out.print("Enter your choice: ");
+            if(scanner.hasNextInt()) {
                 int choice = scanner.nextInt();
                 scanner.nextLine();
                 switch (choice) {
@@ -255,19 +243,15 @@ public class Main {
                     case 6 -> viewAvailableElectricCars();
                     case 7 -> viewAllUsers();
                     case 8 -> {
-                        runing = false;
+                        running = false;
                         System.out.println("See you next time !!!!");
                     }
                     default -> System.out.println("Please select a number between 1 and 8.");
                 }
-            } catch (InputMismatchException e) {
+            } else{
                 System.out.println("Invalid input!");
-                scanner.next();
-                menu();
+                scanner.nextLine();
             }
         }
-
-
-
     }
 }

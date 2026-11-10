@@ -71,6 +71,7 @@ public class CarBookingService {
          carBookingDao.deleteCarBooking(id);
     }
     public CarBooking[] getCarBookedBySpecificUser(UUID userId){
+        User user= userService.getUserById(userId).orElseThrow(()->new UserNotFoundException("User not found with ID:"+userId));
         return carBookingDao.getCarBookedBySpecificUser(userId);
     }
     public CarBooking[] getAllBooking(){
